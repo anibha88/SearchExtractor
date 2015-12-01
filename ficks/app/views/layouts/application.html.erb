@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ficks</title>
+  <title>SearchExtractor</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <% if current_user %>
+          Welcome <%= current_user.name %>!
+          <%= link_to "Sign Out", signout_path %>
+        <% else %>
+          <%= link_to "Sign in with Twitter", "/auth/twitter" %>
+        <% end %>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <%= yield %>
+</div>
 
 </body>
 </html>
