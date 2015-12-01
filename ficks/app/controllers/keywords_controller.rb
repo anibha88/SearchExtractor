@@ -5,6 +5,10 @@ class KeywordsController < ApplicationController
   # GET /keywords.json
   def index
     @keywords = Keyword.all
+    @keywords.each do |keyword|
+      # binding.pry
+      @results = Google::Search::Web.new(query: keyword.title )
+    end 
   end
 
   # GET /keywords/1
