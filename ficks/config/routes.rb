@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :keywords do
+    collection { post :import }
+  end
   root to: 'welcome#index'
   get 'auth/:provider/callback', to: 'session#create'
   get "/signout" => "session#destroy", :as => :signout
