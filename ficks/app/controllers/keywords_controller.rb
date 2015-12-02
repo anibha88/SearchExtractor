@@ -1,10 +1,14 @@
 class KeywordsController < ApplicationController
   before_action :set_keyword, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate
 
   # GET /keywords
   # GET /keywords.json
   def index
     @keywords = Keyword.all
+    @keywords.each do |keyword|
+      @results = Google::Search::Web.new(query: keyword.title )
+    end 
   end
 
   # GET /keywords/1
@@ -75,5 +79,14 @@ class KeywordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def keyword_params
       params.require(:keyword).permit(:title)
+    end
+
+    def authenticate
+      # binding.pry
+      # redirect_to root_path unless current_user
+      unless  current_user
+        flash[:alert] = 'Please Login'
+        redirect_to root_path
+      end
     end
 end
